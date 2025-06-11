@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
     })
     .catch(err => {
         console.log(err);
-        res.status(500).json({ message: 'Error retrieving Posts' })
+        res.status(500).json({ message: 'The posts information could not be retrieved' });
     })
 })
 
