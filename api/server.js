@@ -6,9 +6,6 @@ const server = express();
 server.use(express.json());
 server.use('/api/posts', postsRouter);
 
-// Other Endpoints
-// Other Endpoints
-
 
 
 module.exports = server;
