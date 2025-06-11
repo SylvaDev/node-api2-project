@@ -22,7 +22,7 @@ router.get('/:id', (req, res) => {
     Posts.findById(req.params.id)
     .then(post => {
         if (post){
-            res.status(200).json(post)
+            res.status(200).json(post);
         } else {
             res.status(404).json({ message: 'The post with the specified ID does not exist' });
         }        
@@ -33,6 +33,19 @@ router.get('/:id', (req, res) => {
     })
 })
 
-
+router.post('/', (req, res) => {
+    if (!req.body.title || !req.body.contents) {
+        res.status(400).json({ message: 'Please provide title and contents for the post' })
+    } else {
+        Posts.insert(req.body)
+        .then(post => {
+            res.status(201).json(post);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ message: 'There was an error while saving the post to the database' });
+        })
+    }
+})
 
 module.exports = router;
