@@ -7,6 +7,17 @@ router.use(express.json());
 
 // Posts Endpoints
 // Posts Endpoints
+router.get('/', (req, res) => {
+    Posts.find(req.query)
+    .then(posts => {
+        res.status(200).json(posts);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({ message: 'Error retrieving Posts' })
+    })
+})
+
 
 
 module.exports = router;
