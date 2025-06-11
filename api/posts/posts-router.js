@@ -48,4 +48,33 @@ router.post('/', (req, res) => {
     }
 })
 
+router.put('/:id', (req, res) => {
+    const { id } = req.params;
+    const changes = req.body;
+
+    if (!req.body.title || !req.body.contents) {
+        return res.status(400).json({ message: 'Please provide title and contents for the post' });
+    }
+
+    Posts.findById(id)
+        .then(post => {
+            if (!post) {
+                return res.status(404).json({ message: 'The post with the specified ID does not exist' });
+            }
+            return Posts.update(id, changes);
+        })
+        .then(updatedPost => {
+            if (updatedPost) {
+                return Posts.findById(id);
+            }
+        })
+        .then(post => {
+            res.status(200).json(post);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ message: 'The post information could not be modified' });
+        });
+})
+
 module.exports = router;
